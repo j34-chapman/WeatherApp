@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WeatherApp.MVVM.Views.WeatherView"
+             xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
+             Title="WeatherView">
+
+  <Grid Margin="15" RowDefinitions=".08*,.1*,.5*,.1*,.3*">
+      <Grid>
+          <Frame/>
+          <SearchBar Placeholder="Search" VerticalOptions="Center"></SearchBar>
+      </Grid>
+      <VerticalStackLayout Grid.Row="1" Style="{StaticResource MainStackLayout}">
+          <Label Text="Paris" Style="{StaticResource Title}"/>
+          <Label Text="July 20250"/>
+
+
+      </VerticalStackLayout>
+      <skia:SKLottieView
+          Grid.Row="2"
+          RepeatCount="-1"
+          Source="sunny.json"/>
+      <Grid Grid.Row="3" ColumnDefinitions="*,*,*">
+          <VerticalStackLayout HorizontalOptions="Center" Spacing="10">
+              <Label >
+
+
+              </Label>
+
+
+          </VerticalStackLayout>
+
+
+      </Grid>
+
+  </Grid>
+</ContentPage>
