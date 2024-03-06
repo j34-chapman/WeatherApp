@@ -16,7 +16,7 @@ public static class MauiProgram
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 fonts.AddFont("Rufina-Regular.ttf", "RufinaRegualr");
-                fonts.AddFont("Rufina-Bold.ttf", "RufinaLight");
+                fonts.AddFont("Rufina-Bold.ttf", "RufinaBold");
             });
 
 #if DEBUG
