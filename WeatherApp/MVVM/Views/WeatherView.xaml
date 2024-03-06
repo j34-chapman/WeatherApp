@@ -30,7 +30,7 @@
 
         <!-- VerticalStackLayout in the second row with a style -->
         <VerticalStackLayout Grid.Row="1" Style="{StaticResource MainStackLayout}">
-            <Label Style="{StaticResource Title}"  Text="{Binding PlaceName}"/>
+            <Label Style="{StaticResource Title}"  Text="{Binding PlaceName, Mode =TwoWay}"/>
             <Label Text="{Binding Date, StringFormat='{0: MMMM dd, yyyy}'}"/>
         </VerticalStackLayout>
 

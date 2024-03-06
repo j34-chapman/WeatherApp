@@ -43,13 +43,13 @@ namespace WeatherApp.MVVM.ViewModel
         }
 
         public ICommand SearchCommand =>
-             new Command(async (searchText) =>
-             {
-                 PlaceName = searchText.ToString();
-                 var location =
-                        await GetCoordinatesAsync(searchText.ToString());
-                 await GetWeather(location);
-             });
+            new Command(async (searchText) =>
+            {
+                PlaceName = searchText.ToString();
+                var location = await GetCoordinatesAsync(searchText.ToString());
+                await GetWeather(location, false); // Pass false to indicate not to update PlaceName
+            });
+
 
 
 
@@ -127,11 +127,11 @@ namespace WeatherApp.MVVM.ViewModel
         }
 
 
-        private async Task GetWeather(Location location)
+        private async Task GetWeather(Location location, bool updatePlaceName = true)
         {
             var url =
                  $"https://api.open-meteo.com/v1/forecast?latitude={location.Latitude}&longitude={location.Longitude}&current=temperature_2m,weather_code,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=Europe%2FLondon";
-         
+
             var response =
               await client.GetAsync(url);
 
@@ -141,8 +141,8 @@ namespace WeatherApp.MVVM.ViewModel
                 {
                     var data = await JsonSerializer
                          .DeserializeAsync<WeatherData>(responseStream);
-                        WeatherData = data;
-                    for (int i = 0; i< WeatherData.daily.time.Length; i++)
+                    WeatherData = data;
+                    for (int i = 0; i < WeatherData.daily.time.Length; i++)
                     {
                         var nextdays = new NextDays
                         {
@@ -153,18 +153,42 @@ namespace WeatherApp.MVVM.ViewModel
 
                         };
                         WeatherData.nextdays.Add(nextdays);
-
                     }
 
-
-
-                    
-                    
-                    //Console.Write($"Weather: {WeatherData.ToString()}");
+                    if (updatePlaceName)
+                    {
+                        string locationName = await GetLocationNameAsync(location);
+                        PlaceName = locationName;
+                    }
                 }
             }
-       
         }
+
+
+        private async Task<string> GetLocationNameAsync(Location location)
+        {
+            try
+            {
+                var placemarks = await Geocoding.GetPlacemarksAsync(location.Latitude, location.Longitude);
+
+                var placemark = placemarks?.FirstOrDefault();
+                if (placemark != null)
+                {
+                    // You can customize this logic to prioritize city name or use other address components
+                    var cityName = placemark.Locality ?? placemark.AdminArea;
+
+                    return cityName;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error getting location name: {ex.Message}");
+            }
+
+            return string.Empty;
+        }
+
+
 
         private async Task<Location> GetCoordinatesAsync(string address)
         {
