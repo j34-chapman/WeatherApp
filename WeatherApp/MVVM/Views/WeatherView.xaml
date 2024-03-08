@@ -46,8 +46,8 @@
         <Grid Grid.Row="3" ColumnDefinitions="*,*,*">
             <!-- VerticalStackLayout in the first column with Labels -->
             <VerticalStackLayout HorizontalOptions="Center" Spacing="10">
-                <Label Style="{StaticResource WeatherTitle}" Text="Temp" />
-                <Label Style="{StaticResource WeatherValue}" Text="{Binding WeatherData.current.temperature_2m, StringFormat='{0}°c'}"/>
+                <Label Style="{StaticResource Title}" Text="Temp" />
+                <Label Style="{StaticResource Title}" Text="{Binding WeatherData.current.temperature_2m, StringFormat='{0}°c'}"/>
             </VerticalStackLayout>
 
             <!-- VerticalStackLayout in the second column with Labels -->
@@ -96,8 +96,9 @@
                                 Source="{Binding weather_code, Converter={StaticResource CodeToImageConverter}}"/>
                             <!-- Labels within the item template -->
                             <Label Text="{Binding time}" TextColor="{StaticResource }"/>
-                            <Label Text="{Binding temperature_2m_max, StringFormat='{0}°C'}"/>
-                            <Label Text="{Binding weather_code, Converter={StaticResource CodeToWeatherConverter}}" />
+                            <Label Style = "{StaticResource DailyMax }" Text="{Binding temperature_2m_max }"/>
+                            <Label Style = "{StaticResource TempLow }" Text="{Binding temperature_2m_min }"/>
+                    
                         </VerticalStackLayout>
                     </Frame>
                 </DataTemplate>

@@ -40,5 +40,9 @@
 	<string>This app needs access to the photo gallery for picking photos and videos.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This app needs access to photos gallery for picking photos and videos.</string>
+	<key>CFBundleAllowMixedLocalizations</key>
+	<true/>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>New Entry</string>
 </dict>
 </plist>

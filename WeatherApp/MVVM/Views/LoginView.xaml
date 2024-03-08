@@ -1,0 +1,77 @@
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:WeatherApp.MVVM.Views"
+             x:Class="WeatherApp.MVVM.Views.LoginView"
+             Title="Login"
+             BackgroundColor="{StaticResource DarkBackgroundColor}">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Spacing="25"
+            Padding="30,0"
+            VerticalOptions="Center">
+
+            <Frame
+                HeightRequest="150"
+                WidthRequest="150"
+                CornerRadius="75"
+                BackgroundColor="{StaticResource DarkPrimaryColor}"
+                HorizontalOptions="CenterAndExpand"
+                VerticalOptions="Center">
+                <Image
+                    x:Name="profileImage"
+                    Source="avatar.jpeg"
+                    Aspect="AspectFill"
+                    HeightRequest="150"
+                    WidthRequest="150">
+                </Image>
+            </Frame>
+
+            <Button
+                x:Name="takeProfile"
+                Text="Add Profile Picture"
+                BackgroundColor="{StaticResource DarkAccentColor}"
+                Clicked="TakePhoto"
+                TextColor="{StaticResource DarkTextColor}"
+                HorizontalOptions="CenterAndExpand" />
+
+            <Entry
+                Placeholder="Username"
+                Keyboard="Email"
+                PlaceholderColor="{StaticResource DarkTextColor}"
+                TextColor="{StaticResource DarkTextColor}"
+                BackgroundColor="{StaticResource DarkSecondaryColor}"
+                Margin="0,0,0,10" />
+
+            <Entry
+                Placeholder="Password"
+                IsPassword="True"
+                PlaceholderColor="{StaticResource DarkTextColor}"
+                TextColor="{StaticResource DarkTextColor}"
+                BackgroundColor="{StaticResource DarkSecondaryColor}"
+                Margin="0,0,0,20" />
+
+            <Button
+                Text="Login"
+                BackgroundColor="{StaticResource DarkAccentColor}"
+                TextColor="{StaticResource DarkTextColor}"
+                HorizontalOptions="CenterAndExpand"
+                Clicked="Button_Clicked"/>
+
+            <Label
+                Text="Forgot Password?"
+                TextColor="{StaticResource DarkAccentColor}"
+                HorizontalOptions="Center"
+                Margin="0,20,0,0" />
+
+            <Label
+                Text="Don't have an account? Sign Up"
+                TextColor="{StaticResource DarkAccentColor}"
+                HorizontalOptions="Center"
+                Margin="0,10,0,0" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
+
+

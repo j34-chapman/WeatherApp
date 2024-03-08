@@ -24,6 +24,23 @@
         <Setter Property="FontSize" Value="Large"/>
     </Style>
 
+    <Style x:Key="DailyMax" TargetType="Label">
+        <Setter Property="FontAttributes" Value="Bold"/>
+        <Setter Property="FontSize" Value="Large"/>
+    </Style>
+
+     <Style x:Key="DailyMin" TargetType="Label">
+        <Setter Property="FontSize" Value="Large"/>
+    </Style>
+
+    <Style x:Key="TempHigh" TargetType="Label">
+        <Setter Property="FontAttributes" Value="Bold"/>
+    </Style>
+
+     <Style x:Key="TempLow" TargetType="Label">
+        
+    </Style>
+
     <!-- Style for Label elements with a key "WeatherTitle" -->
     <Style x:Key="WeatherTitle" TargetType="Label">
         <Setter Property="FontFamily" Value="RufinaRegualr"/>

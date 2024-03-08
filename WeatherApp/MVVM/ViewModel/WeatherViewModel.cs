@@ -90,7 +90,7 @@ namespace WeatherApp.MVVM.ViewModel
 
 
 
-        private async Task GetCurrentLocationAndWeather()
+        public async Task GetCurrentLocationAndWeather()
         {
             try
             {
@@ -127,42 +127,42 @@ namespace WeatherApp.MVVM.ViewModel
         }
 
 
-        private async Task GetWeather(Location location, bool updatePlaceName = true)
+private async Task GetWeather(Location location, bool updatePlaceName = true)
+{
+    var url =
+         $"https://api.open-meteo.com/v1/forecast?latitude={location.Latitude}&longitude={location.Longitude}&current=temperature_2m,weather_code,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=Europe%2FLondon";
+
+    var response =
+      await client.GetAsync(url);
+
+    if (response.IsSuccessStatusCode)
+    {
+        using (var responseStream = await response.Content.ReadAsStreamAsync())
         {
-            var url =
-                 $"https://api.open-meteo.com/v1/forecast?latitude={location.Latitude}&longitude={location.Longitude}&current=temperature_2m,weather_code,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=Europe%2FLondon";
-
-            var response =
-              await client.GetAsync(url);
-
-            if (response.IsSuccessStatusCode)
+            var data = await JsonSerializer
+                 .DeserializeAsync<WeatherData>(responseStream);
+            WeatherData = data;
+            for (int i = 0; i < WeatherData.daily.time.Length; i++)
             {
-                using (var responseStream = await response.Content.ReadAsStreamAsync())
+                var nextdays = new NextDays
                 {
-                    var data = await JsonSerializer
-                         .DeserializeAsync<WeatherData>(responseStream);
-                    WeatherData = data;
-                    for (int i = 0; i < WeatherData.daily.time.Length; i++)
-                    {
-                        var nextdays = new NextDays
-                        {
-                            time = WeatherData.daily.time[i],
-                            weather_code = WeatherData.daily.weather_code[i],
-                            temperature_2m_max = WeatherData.daily.temperature_2m_max[i],
-                            temperature_2m_min = WeatherData.daily.temperature_2m_min[i],
+                    time = WeatherData.daily.time[i],
+                    weather_code = WeatherData.daily.weather_code[i],
+                    temperature_2m_max = WeatherData.daily.temperature_2m_max[i],
+                    temperature_2m_min = WeatherData.daily.temperature_2m_min[i],
 
-                        };
-                        WeatherData.nextdays.Add(nextdays);
-                    }
+                };
+                WeatherData.nextdays.Add(nextdays);
+            }
 
-                    if (updatePlaceName)
-                    {
-                        string locationName = await GetLocationNameAsync(location);
-                        PlaceName = locationName;
-                    }
-                }
+            if (updatePlaceName)
+            {
+                string locationName = await GetLocationNameAsync(location);
+                PlaceName = locationName;
             }
         }
+    }
+}
 
 
         private async Task<string> GetLocationNameAsync(Location location)

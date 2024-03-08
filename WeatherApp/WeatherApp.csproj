@@ -98,6 +98,7 @@
 	  <None Remove="Resources\Raw\thunder.json" />
 	  <None Remove="Resources\Raw\windy.json" />
 	  <None Remove="Converters\" />
+	  <None Remove="Resources\Images\avatar.jpeg" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="MVVM\" />
@@ -120,6 +121,7 @@
 	  <BundleResource Include="Resources\Raw\sunny.json" />
 	  <BundleResource Include="Resources\Raw\thunder.json" />
 	  <BundleResource Include="Resources\Raw\windy.json" />
+	  <BundleResource Include="Resources\Images\avatar.jpeg" />
 	</ItemGroup>
 	<ItemGroup Condition="'$(TargetFramework)' == 'net8.0-android'">
 	  <PackageReference Include="SkiaSharp.NativeAssets.Android" Version="2.88.7" />

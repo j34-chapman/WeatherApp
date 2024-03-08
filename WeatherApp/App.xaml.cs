@@ -8,7 +8,8 @@ public partial class App : Application
 	{
 		InitializeComponent();
 
-		MainPage = new WeatherView();
-	}
+        MainPage = new NavigationPage(new LoginView());
+        //MainPage = new WeatherView();
+    }
 }
 
