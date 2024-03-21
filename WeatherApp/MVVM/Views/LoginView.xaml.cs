@@ -11,6 +11,8 @@ public partial class LoginView : ContentPage
         InitializeComponent();
         BindingContext = new LoginViewModel();
 
+      
+
 
     }
 
@@ -55,12 +57,15 @@ public partial class LoginView : ContentPage
 
     private void Button_Clicked(object sender, EventArgs e)
     {
+        // Hide the navigation bar
+        NavigationPage.SetHasNavigationBar(this, false);
 
-        Navigation.PushAsync(new WeatherView());
-
-        // Clear the navigation stack, making it a one-way navigation
-        Application.Current.MainPage = new NavigationPage(new WeatherView());
+        // Navigate to the WeatherView page
+        var weatherView = new WeatherView();
+        NavigationPage.SetHasNavigationBar(weatherView, false); // Ensure navigation bar is hidden in the WeatherView
+        Application.Current.MainPage = new NavigationPage(weatherView);
     }
+
 
 
 

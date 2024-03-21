@@ -2,7 +2,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:WeatherApp.MVVM.Views"
              x:Class="WeatherApp.MVVM.Views.LoginView"
-             Title="Login"
              BackgroundColor="{StaticResource DarkBackgroundColor}">
 
     <ScrollView>
