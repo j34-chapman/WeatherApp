@@ -8,6 +8,7 @@ public partial class WeatherView : ContentPage
 	{
 		InitializeComponent();
 		BindingContext = new WeatherViewModel();
+<<<<<<< HEAD
 
 
         // Hide the navigation bar
@@ -16,3 +17,7 @@ public partial class WeatherView : ContentPage
 
 	}
 
+=======
+	}
+}
+>>>>>>> parent of 9f7942d (Working point with loading screens)
