@@ -132,10 +132,6 @@ private async Task GetWeather(Location location, bool updatePlaceName = true)
     var url =
          $"https://api.open-meteo.com/v1/forecast?latitude={location.Latitude}&longitude={location.Longitude}&current=temperature_2m,weather_code,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=Europe%2FLondon";
 
-            IsLoading = true;
-
-    
-
     var response =
       await client.GetAsync(url);
 
@@ -158,7 +154,6 @@ private async Task GetWeather(Location location, bool updatePlaceName = true)
                 };
                 WeatherData.nextdays.Add(nextdays);
             }
-            IsVisible = true;
 
             if (updatePlaceName)
             {
@@ -167,7 +162,6 @@ private async Task GetWeather(Location location, bool updatePlaceName = true)
             }
         }
     }
-            IsLoading = false;
 }
 
 

@@ -4,12 +4,14 @@
              x:Class="WeatherApp.MVVM.Views.WeatherView"
              xmlns:converters="clr-namespace:WeatherApp.Converters"
              xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
-             >
+             Title="WeatherView">
 
     <ContentPage.Resources>
         <converters:CodeToWeatherConverter x:Key="CodeToWeatherConverter"/>
         <converters:CodeToImageConverter x:Key="CodeToImageConverter"/>
     </ContentPage.Resources>
+
+    
 
     <!-- Grid with specified rows and margins -->
     <Grid Margin="15" RowDefinitions=".08*,.2*,.6*,.1*,.3*">
@@ -24,33 +26,44 @@
                 VerticalOptions="Center" />
         </Grid>
 
-        <!-- Main StackLayout in the second row with location and date -->
-        <Grid Grid.Row="1" ColumnDefinitions="*,*" IsVisible="{Binding IsVisible}">
-            <VerticalStackLayout Grid.Column="0" HorizontalOptions="Center" Spacing="10" Style="{StaticResource MainStackLayout}">
-                <Label Style="{StaticResource LocationTitle}" Text="{Binding PlaceName, Mode=TwoWay}" />
-                <Label Text="{Binding Date, StringFormat='{0: MMMM dd, yyyy}'}" />
-            </VerticalStackLayout>
 
-            <!-- StackLayout for temperature in the second row, second column -->
-            <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center" Spacing="10" Style="{StaticResource MainStackLayout}">
-                <Label Style="{StaticResource TemperatureTitle}" Text="{Binding WeatherData.current.temperature_2m, StringFormat='{0}°c'}" />
-            </VerticalStackLayout>
-        </Grid>
+
+        <!-- VerticalStackLayout in the second row with a style -->
+        <VerticalStackLayout Grid.Row="1" Style="{StaticResource MainStackLayout}">
+            <Label Style="{StaticResource Title}"  Text="{Binding PlaceName, Mode =TwoWay}"/>
+            <Label Text="{Binding Date, StringFormat='{0: MMMM dd, yyyy}'}"/>
+        </VerticalStackLayout>
+
+
 
         <!-- SKLottieView in the third row with specified source and repeat count -->
         <skia:SKLottieView
             Grid.Row="2" RepeatCount="-1" Source="{Binding WeatherData.current.weather_code, Converter={StaticResource CodeToImageConverter}}"/>
 
+
+
         <!-- Grid in the fourth row with three columns -->
-        <Grid Grid.Row="3" IsVisible="{Binding IsVisible}">
-           
+        <Grid Grid.Row="3" ColumnDefinitions="*,*,*">
+            <!-- VerticalStackLayout in the first column with Labels -->
+            <VerticalStackLayout HorizontalOptions="Center" Spacing="10">
+                <Label Style="{StaticResource Title}" Text="Temp" />
+                <Label Style="{StaticResource Title}" Text="{Binding WeatherData.current.temperature_2m, StringFormat='{0}°c'}"/>
+            </VerticalStackLayout>
+
+            <!-- VerticalStackLayout in the second column with Labels -->
+            <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center" Spacing="10">
+                <Label Style="{StaticResource WeatherTitle}" Text="Wind" />
+                <Label Style="{StaticResource WeatherValue}" Text="{Binding WeatherData.current.wind_speed_10m, StringFormat='{0}km/h'}"/>
+            </VerticalStackLayout>
+
             <!-- VerticalStackLayout in the third column with Labels -->
-            <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center">
-              
-                <Label Style="{StaticResource TemperatureDescription}"
-                       Text="{Binding WeatherData.current.weather_code, Converter={StaticResource CodeToWeatherConverter} }"/>
+            <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center" Spacing="10">
+                <Label Style="{StaticResource WeatherTitle}" Text="Weather Code" />
+                <Label Style="{StaticResource WeatherValue}" Text="{Binding WeatherData.current.weather_code, Converter={StaticResource CodeToWeatherConverter} }"/>
             </VerticalStackLayout>
         </Grid>
+
+
 
         <!-- CollectionView in the fifth row -->
         <CollectionView Grid.Row="4" ItemsSource="{Binding WeatherData.nextdays}">
@@ -85,16 +98,12 @@
                             <Label Text="{Binding time}" TextColor="{StaticResource }"/>
                             <Label Style = "{StaticResource DailyMax }" Text="{Binding temperature_2m_max }"/>
                             <Label Style = "{StaticResource TempLow }" Text="{Binding temperature_2m_min }"/>
+                    
                         </VerticalStackLayout>
                     </Frame>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-
-        <Grid Grid.RowSpan="5" Margin="-15" BackgroundColor="Black" Opacity="0.9" IsVisible="{Binding IsLoading}" >
-            <ActivityIndicator IsRunning="True" VerticalOptions="Center"/>
-        </Grid>
-
     </Grid>
 </ContentPage>
 

@@ -9,7 +9,10 @@ public partial class WeatherView : ContentPage
 		InitializeComponent();
 		BindingContext = new WeatherViewModel();
 
+
         // Hide the navigation bar
         NavigationPage.SetHasNavigationBar(this, false);
     }
-}
+
+	}
+
