@@ -28,22 +28,23 @@
     <Color x:Key="Gray900">#212121</Color>
     <Color x:Key="Gray950">#141414</Color>
 
-    <Color x:Key="DarkBlue">#060723</Color>
-    <Color x:Key="CardColour">#060723</Color>
+    <Color x:Key="DarkBlue">#8AD7F3</Color>
+    <Color x:Key="CardColour">#d07ed7</Color>
 
-    <!-- Light Theme Colors -->
-    <Color x:Key="TextColor">#0b0b0f</Color>
-    <Color x:Key="BackgroundColor">#e8e8f8</Color>
-    <Color x:Key="PrimaryColor">#212065</Color>
-    <Color x:Key="SecondaryColor">#d07ed7</Color>
-    <Color x:Key="AccentColor">#ab3691</Color>
+       <!-- Light Theme Colors -->
+    <Color x:Key="TextColor">#FFFFFF</Color>
+    <Color x:Key="BackgroundColor">#13BEFC</Color>
+    <Color x:Key="PrimaryColor">#2A87B3</Color>
+    <Color x:Key="SecondaryColor">#B079D7</Color>
+    <Color x:Key="AccentColor">#A63096</Color>
 
     <!-- Dark Theme Colors -->
-    <Color x:Key="DarkTextColor">#f0f0f4</Color>
-    <Color x:Key="DarkBackgroundColor">#070717</Color>
-    <Color x:Key="DarkPrimaryColor">#9b9adf</Color>
-    <Color x:Key="DarkSecondaryColor">#792881</Color>
-    <Color x:Key="DarkAccentColor">#c954b0</Color>
+    <Color x:Key="DarkTextColor">#FFFFFF</Color>
+    <Color x:Key="DarkBackgroundColor">#0099D1</Color>
+    <Color x:Key="DarkPrimaryColor">#91C6DE</Color>
+    <Color x:Key="DarkSecondaryColor">#5F2886</Color>
+    <Color x:Key="DarkAccentColor">#CF59BF</Color>
+
     
 
     <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource Primary}"/>

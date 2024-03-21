@@ -1,4 +1,5 @@
 ﻿
+
 using PropertyChanged;
 using System;
 using System.Collections.Generic;
@@ -15,9 +16,9 @@ namespace WeatherApp.MVVM.ViewModel
     [AddINotifyPropertyChangedInterface]
 
 
-    public class WeatherViewModel 
+    public class WeatherViewModel
     {
-        
+
 
         public WeatherData WeatherData { get; set; }
         public Current current { get; set; }
@@ -47,6 +48,7 @@ namespace WeatherApp.MVVM.ViewModel
             {
                 PlaceName = searchText.ToString();
                 var location = await GetCoordinatesAsync(searchText.ToString());
+
                 await GetWeather(location, false); // Pass false to indicate not to update PlaceName
             });
 
@@ -127,42 +129,48 @@ namespace WeatherApp.MVVM.ViewModel
         }
 
 
-private async Task GetWeather(Location location, bool updatePlaceName = true)
-{
-    var url =
-         $"https://api.open-meteo.com/v1/forecast?latitude={location.Latitude}&longitude={location.Longitude}&current=temperature_2m,weather_code,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=Europe%2FLondon";
-
-    var response =
-      await client.GetAsync(url);
-
-    if (response.IsSuccessStatusCode)
-    {
-        using (var responseStream = await response.Content.ReadAsStreamAsync())
+        private async Task GetWeather(Location location, bool updatePlaceName = true)
         {
-            var data = await JsonSerializer
-                 .DeserializeAsync<WeatherData>(responseStream);
-            WeatherData = data;
-            for (int i = 0; i < WeatherData.daily.time.Length; i++)
+            var url =
+                 $"https://api.open-meteo.com/v1/forecast?latitude={location.Latitude}&longitude={location.Longitude}&current=temperature_2m,weather_code,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=Europe%2FLondon";
+
+            IsLoading = true;
+
+
+
+            var response =
+              await client.GetAsync(url);
+
+            if (response.IsSuccessStatusCode)
             {
-                var nextdays = new NextDays
+                using (var responseStream = await response.Content.ReadAsStreamAsync())
                 {
-                    time = WeatherData.daily.time[i],
-                    weather_code = WeatherData.daily.weather_code[i],
-                    temperature_2m_max = WeatherData.daily.temperature_2m_max[i],
-                    temperature_2m_min = WeatherData.daily.temperature_2m_min[i],
+                    var data = await JsonSerializer
+                         .DeserializeAsync<WeatherData>(responseStream);
+                    WeatherData = data;
+                    for (int i = 0; i < WeatherData.daily.time.Length; i++)
+                    {
+                        var nextdays = new NextDays
+                        {
+                            time = WeatherData.daily.time[i],
+                            weather_code = WeatherData.daily.weather_code[i],
+                            temperature_2m_max = WeatherData.daily.temperature_2m_max[i],
+                            temperature_2m_min = WeatherData.daily.temperature_2m_min[i],
 
-                };
-                WeatherData.nextdays.Add(nextdays);
-            }
+                        };
+                        WeatherData.nextdays.Add(nextdays);
+                    }
+                    IsVisible = true;
 
-            if (updatePlaceName)
-            {
-                string locationName = await GetLocationNameAsync(location);
-                PlaceName = locationName;
+                    if (updatePlaceName)
+                    {
+                        string locationName = await GetLocationNameAsync(location);
+                        PlaceName = locationName;
+                    }
+                }
             }
+            IsLoading = false;
         }
-    }
-}
 
 
         private async Task<string> GetLocationNameAsync(Location location)
@@ -205,4 +213,5 @@ private async Task GetWeather(Location location, bool updatePlaceName = true)
 
     }
 }
+
 

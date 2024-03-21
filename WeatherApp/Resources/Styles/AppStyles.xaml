@@ -19,9 +19,19 @@
     </Style>
 
     <!-- Style for Label elements with a key "Title" -->
-    <Style x:Key="Title" TargetType="Label">
+    <Style x:Key="LocationTitle" TargetType="Label">
         <Setter Property="FontAttributes" Value="Bold"/>
         <Setter Property="FontSize" Value="Large"/>
+    </Style>
+
+    <Style x:Key="TemperatureTitle" TargetType="Label">
+        <Setter Property="FontAttributes" Value="Bold"/>
+        <Setter Property="FontSize" Value="50"/> <!-- Set to an absolute value, adjust as needed -->
+    </Style>
+
+    <Style x:Key="TemperatureDescription" TargetType="Label">
+        <Setter Property="FontAttributes" Value="Bold"/>
+        <Setter Property="FontSize" Value="30"/> <!-- Set to an absolute value, adjust as needed -->
     </Style>
 
     <Style x:Key="DailyMax" TargetType="Label">
@@ -53,7 +63,7 @@
 
     <Style x:Key="Card" TargetType="Frame">
         <Setter Property="Padding" Value="10"/>
-        <Setter Property="BackgroundColor" Value="{StaticResource DarkSecondaryColor} "/>
+        <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor} "/>
         <Setter Property="BorderColor" Value="Transparent"/>
         <Setter Property="CornerRadius" Value="25"/>
         <Setter Property="HeightRequest" Value="150"/>
