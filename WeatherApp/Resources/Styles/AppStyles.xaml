@@ -18,30 +18,43 @@
         <Setter Property="VerticalOptions" Value="Center"/>
     </Style>
 
+
+
     <!-- Style for Label elements with a key "Title" -->
     <Style x:Key="LocationTitle" TargetType="Label">
-        <Setter Property="FontAttributes" Value="Bold"/>
+        <Setter Property="FontFamily" Value="PoppinsBold"/>
         <Setter Property="FontSize" Value="Large"/>
     </Style>
 
+      <Style x:Key="LocationDate" TargetType="Label">
+        <Setter Property="FontFamily" Value="PoppinsRegular"/>
+    </Style>
+
     <Style x:Key="TemperatureTitle" TargetType="Label">
-        <Setter Property="FontAttributes" Value="Bold"/>
+        <Setter Property="FontFamily" Value="PoppinsBold"/>
         <Setter Property="FontSize" Value="50"/> <!-- Set to an absolute value, adjust as needed -->
     </Style>
 
     <Style x:Key="TemperatureDescription" TargetType="Label">
-        <Setter Property="FontAttributes" Value="Bold"/>
+        <Setter Property="FontFamily" Value="PoppinsBold"/>
         <Setter Property="FontSize" Value="30"/> <!-- Set to an absolute value, adjust as needed -->
     </Style>
 
+
+
     <Style x:Key="DailyMax" TargetType="Label">
-        <Setter Property="FontAttributes" Value="Bold"/>
-        <Setter Property="FontSize" Value="Large"/>
+        <Setter Property="FontFamily" Value="PoppinsExtraBold"/>
+        <Setter Property="FontSize" Value="17"/>
+        
     </Style>
 
      <Style x:Key="DailyMin" TargetType="Label">
-        <Setter Property="FontSize" Value="Large"/>
+         <Setter Property="FontFamily" Value="PoppinsRegular"/>
+         <Setter Property="FontSize" Value="17"/>
+         
     </Style>
+
+
 
     <Style x:Key="TempHigh" TargetType="Label">
         <Setter Property="FontAttributes" Value="Bold"/>
@@ -61,9 +74,9 @@
         <Setter Property="FontFamily" Value="RufinaBold"/>
     </Style>
 
-    <Style x:Key="Card" TargetType="Frame">
+    <Style x:Key="Card" TargetType="Frame" >
         <Setter Property="Padding" Value="10"/>
-        <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor} "/>
+
         <Setter Property="BorderColor" Value="Transparent"/>
         <Setter Property="CornerRadius" Value="25"/>
         <Setter Property="HeightRequest" Value="150"/>

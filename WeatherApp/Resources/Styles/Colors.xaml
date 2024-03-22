@@ -63,3 +63,18 @@
     <SolidColorBrush x:Key="Gray900Brush" Color="{StaticResource Gray900}"/>
     <SolidColorBrush x:Key="Gray950Brush" Color="{StaticResource Gray950}"/>
 </ResourceDictionary>
+
+
+    <!--Light Theme Colors 
+    <Color x:Key="TextColor">#0F0A0F</Color>
+    <Color x:Key="BackgroundColor">#F8F1F8</Color>
+    <Color x:Key="PrimaryColor">#FFA3FD</Color>
+    <Color x:Key="SecondaryColor">#E08ADF</Color>
+    <Color x:Key="AccentColor">#E359E1</Color>
+
+     Dark Theme Colors 
+    <Color x:Key="DarkTextColor">#F5F0F5</Color>
+    <Color x:Key="DarkBackgroundColor">#0E070E</Color>
+    <Color x:Key="DarkPrimaryColor">#5C005A</Color>
+    <Color x:Key="DarkSecondaryColor">#751F73</Color>
+    <Color x:Key="DarkAccentColor">#A61CA3</Color>-->

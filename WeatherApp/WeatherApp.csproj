@@ -100,6 +100,24 @@
 	  <None Remove="Resources\Raw\windy.json" />
 	  <None Remove="Converters\" />
 	  <None Remove="Resources\Images\avatar.jpeg" />
+	  <None Remove="Resources\Fonts\Poppins-Black.ttf" />
+	  <None Remove="Resources\Fonts\Poppins-BlackItalic.ttf" />
+	  <None Remove="Resources\Fonts\Poppins-Bold.ttf" />
+	  <None Remove="Resources\Fonts\Poppins-BoldItalic.ttf" />
+	  <None Remove="Resources\Fonts\Poppins-ExtraBold.ttf" />
+	  <None Remove="Resources\Fonts\Poppins-ExtraBoldItalic.ttf" />
+	  <None Remove="Resources\Fonts\Poppins-ExtraLight.ttf" />
+	  <None Remove="Resources\Fonts\Poppins-ExtraLightItalic.ttf" />
+	  <None Remove="Resources\Fonts\Poppins-Italic.ttf" />
+	  <None Remove="Resources\Fonts\Poppins-Light.ttf" />
+	  <None Remove="Resources\Fonts\Poppins-LightItalic.ttf" />
+	  <None Remove="Resources\Fonts\Poppins-Medium.ttf" />
+	  <None Remove="Resources\Fonts\Poppins-MediumItalic.ttf" />
+	  <None Remove="Resources\Fonts\Poppins-Regular.ttf" />
+	  <None Remove="Resources\Fonts\Poppins-SemiBold.ttf" />
+	  <None Remove="Resources\Fonts\Poppins-SemiBoldItalic.ttf" />
+	  <None Remove="Resources\Fonts\Poppins-Thin.ttf" />
+	  <None Remove="Resources\Fonts\Poppins-ThinItalic.ttf" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="MVVM\" />
@@ -123,6 +141,24 @@
 	  <BundleResource Include="Resources\Raw\thunder.json" />
 	  <BundleResource Include="Resources\Raw\windy.json" />
 	  <BundleResource Include="Resources\Images\avatar.jpeg" />
+	  <BundleResource Include="Resources\Fonts\Poppins-Black.ttf" />
+	  <BundleResource Include="Resources\Fonts\Poppins-BlackItalic.ttf" />
+	  <BundleResource Include="Resources\Fonts\Poppins-Bold.ttf" />
+	  <BundleResource Include="Resources\Fonts\Poppins-BoldItalic.ttf" />
+	  <BundleResource Include="Resources\Fonts\Poppins-ExtraBold.ttf" />
+	  <BundleResource Include="Resources\Fonts\Poppins-ExtraBoldItalic.ttf" />
+	  <BundleResource Include="Resources\Fonts\Poppins-ExtraLight.ttf" />
+	  <BundleResource Include="Resources\Fonts\Poppins-ExtraLightItalic.ttf" />
+	  <BundleResource Include="Resources\Fonts\Poppins-Italic.ttf" />
+	  <BundleResource Include="Resources\Fonts\Poppins-Light.ttf" />
+	  <BundleResource Include="Resources\Fonts\Poppins-LightItalic.ttf" />
+	  <BundleResource Include="Resources\Fonts\Poppins-Medium.ttf" />
+	  <BundleResource Include="Resources\Fonts\Poppins-MediumItalic.ttf" />
+	  <BundleResource Include="Resources\Fonts\Poppins-Regular.ttf" />
+	  <BundleResource Include="Resources\Fonts\Poppins-SemiBold.ttf" />
+	  <BundleResource Include="Resources\Fonts\Poppins-SemiBoldItalic.ttf" />
+	  <BundleResource Include="Resources\Fonts\Poppins-Thin.ttf" />
+	  <BundleResource Include="Resources\Fonts\Poppins-ThinItalic.ttf" />
 	</ItemGroup>
 	<ItemGroup Condition="'$(TargetFramework)' == 'net8.0-android'">
 	  <PackageReference Include="SkiaSharp.NativeAssets.Android" Version="2.88.7" />

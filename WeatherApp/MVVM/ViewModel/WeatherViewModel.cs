@@ -43,20 +43,45 @@ namespace WeatherApp.MVVM.ViewModel
 
         }
 
-        public ICommand SearchCommand => new Command(async (searchText) =>
+        public ICommand SearchCommand =>
+    new Command(async (searchText) =>
+    {
+        if (searchText is string text)
         {
-            var validationResult = new NoNumbersValidationBehavior().Validate(searchText);
-
-            if (!validationResult.IsValid)
+            // Check if the input is empty
+            if (string.IsNullOrWhiteSpace(text))
             {
-                await Application.Current.MainPage.DisplayAlert("Validation Error", validationResult.Message, "OK");
+                // Input is empty, show error message
+                await DisplayErrorMessage("Place name cannot be empty.");
                 return;
             }
 
-            PlaceName = searchText.ToString();
-            var location = await GetCoordinatesAsync(searchText.ToString());
+            // Check if the input contains a number
+            if (text.Any(char.IsDigit))
+            {
+                // Input contains a number, show error message
+                await DisplayErrorMessage("Place name cannot contain numbers.");
+                return;
+            }
+
+            PlaceName = text;
+            var location = await GetCoordinatesAsync(text);
+
             await GetWeather(location, false); // Pass false to indicate not to update PlaceName
-        });
+        }
+        else
+        {
+            // Input is null, show error message
+            await DisplayErrorMessage("Place name cannot be null.");
+        }
+    });
+
+        private async Task DisplayErrorMessage(string message)
+        {
+            // Here you should display the error message to the user using your preferred UI mechanism
+            // For example, if you are using Xamarin.Forms, you might use DisplayAlert
+            await App.Current.MainPage.DisplayAlert("Error", message, "OK");
+        }
 
 
 

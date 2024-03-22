@@ -5,7 +5,7 @@
              x:Class="WeatherApp.MVVM.Views.WeatherView"
              xmlns:converters="clr-namespace:WeatherApp.Converters"
              xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
-             BackgroundColor="{StaticResource BackgroundColor}"
+             BackgroundColor="{AppThemeBinding Light=#F8F1F8, Dark=#0E070E}"
              >
 
     <ContentPage.Resources>
@@ -21,16 +21,12 @@
     <Frame />
     <SearchBar
         x:Name="searchBar"
+        BackgroundColor="{AppThemeBinding Light=White, Dark=Black }"
         Placeholder="Search"
         SearchCommand="{Binding SearchCommand}"
         SearchCommandParameter="{Binding Source={x:Reference searchBar}, Path=Text}"
         VerticalOptions="Center">
-        <SearchBar.Behaviors>
-            <toolkit:TextValidationBehavior
-                Flags="ValidateOnValueChanged"
-                MinimumLength="1"
-                MaximumLength="50" />
-        </SearchBar.Behaviors>
+        
     </SearchBar>
 </Grid>
 
@@ -40,13 +36,18 @@
         <!-- Main StackLayout in the second row with location and date -->
         <Grid Grid.Row="1" ColumnDefinitions="*,*" IsVisible="{Binding IsVisible}">
             <VerticalStackLayout Grid.Column="0" HorizontalOptions="Center" Spacing="10" Style="{StaticResource MainStackLayout}">
-                <Label Style="{StaticResource LocationTitle}" Text="{Binding PlaceName, Mode=TwoWay}" />
-                <Label Text="{Binding Date, StringFormat='{0: MMMM dd, yyyy}'}" />
+                <Label Style="{StaticResource LocationTitle}"
+                       Text="{Binding PlaceName, Mode=TwoWay}"
+                       TextColor="{AppThemeBinding Light={StaticResource TextColor}, Dark={StaticResource DarkTextColor}}"/>
+
+                <Label Style="{StaticResource LocationDate}"
+                       Text="{Binding Date, StringFormat='{0: MMMM dd, yyyy}'}"
+                       TextColor="{AppThemeBinding Light={StaticResource TextColor}, Dark={StaticResource DarkTextColor}}"/>
             </VerticalStackLayout>
 
             <!-- StackLayout for temperature in the second row, second column -->
             <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center" Spacing="10" Style="{StaticResource MainStackLayout}">
-                <Label Style="{StaticResource TemperatureTitle}" Text="{Binding WeatherData.current.temperature_2m, StringFormat='{0}°c'}" />
+                <Label Style="{StaticResource TemperatureTitle}" Text="{Binding WeatherData.current.temperature_2m, StringFormat='{0}°c'}" TextColor="{AppThemeBinding Light=#0F0A0F, Dark=#F5F0F5}" />
             </VerticalStackLayout>
         </Grid>
 
@@ -61,7 +62,8 @@
             <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center">
               
                 <Label Style="{StaticResource TemperatureDescription}"
-                       Text="{Binding WeatherData.current.weather_code, Converter={StaticResource CodeToWeatherConverter} }"/>
+                       Text="{Binding WeatherData.current.weather_code, Converter={StaticResource CodeToWeatherConverter}}"
+                       TextColor="{AppThemeBinding Light={StaticResource TextColor}, Dark={StaticResource DarkTextColor}}"/>
             </VerticalStackLayout>
         </Grid>
 
@@ -86,7 +88,8 @@
             <!-- Defining the item template for each collection item -->
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Frame Style="{StaticResource Card}" VerticalOptions="Center" Opacity="0.7">
+                    <Frame Style="{StaticResource Card}" VerticalOptions="Center" 
+                           BackgroundColor="{AppThemeBinding Light=#FFA3FD, Dark=#5C005A}">
                         <VerticalStackLayout Spacing="5" VerticalOptions="Center">
                             <!-- SKLottieView within the item template -->
                             <skia:SKLottieView
@@ -95,9 +98,17 @@
                                 WidthRequest="40"
                                 Source="{Binding weather_code, Converter={StaticResource CodeToImageConverter}}"/>
                             <!-- Labels within the item template -->
-                            <Label Text="{Binding time}" TextColor="{StaticResource }"/>
-                            <Label Style = "{StaticResource DailyMax }" Text="{Binding temperature_2m_max }"/>
-                            <Label Style = "{StaticResource TempLow }" Text="{Binding temperature_2m_min }"/>
+                            <Label Text="{Binding time}"
+                                   TextColor="{AppThemeBinding Light={StaticResource TextColor}, Dark={StaticResource DarkTextColor}}"/>
+
+                            <Label Style = "{StaticResource DailyMax }"
+                                   Text="{Binding temperature_2m_max }"
+                                   TextColor="{AppThemeBinding Light={StaticResource TextColor}, Dark={StaticResource DarkTextColor}}"/>
+
+                            <Label Style = "{StaticResource DailyMin }"
+                                   Text="{Binding temperature_2m_min }"
+                                   TextColor="{AppThemeBinding Light={StaticResource TextColor}, Dark={StaticResource DarkTextColor}}"/>
+
                         </VerticalStackLayout>
                     </Frame>
                 </DataTemplate>
@@ -110,5 +121,19 @@
 
     </Grid>
 </ContentPage>
+
+    <!--Light Theme Colors 
+    <Color x:Key="TextColor">#0F0A0F</Color>
+    <Color x:Key="BackgroundColor">#F8F1F8</Color>
+    <Color x:Key="PrimaryColor">#FFA3FD</Color>
+    <Color x:Key="SecondaryColor">#E08ADF</Color>
+    <Color x:Key="AccentColor">#E359E1</Color>
+
+     Dark Theme Colors 
+    <Color x:Key="DarkTextColor">#F5F0F5</Color>
+    <Color x:Key="DarkBackgroundColor">#0E070E</Color>
+    <Color x:Key="DarkPrimaryColor">#5C005A</Color>
+    <Color x:Key="DarkSecondaryColor">#751F73</Color>
+    <Color x:Key="DarkAccentColor">#A61CA3</Color>-->
 
 
