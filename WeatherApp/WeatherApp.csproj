@@ -77,6 +77,7 @@
 		</PackageReference>
 		<PackageReference Include="PropertyChanged.Fody" Version="4.1.0" />
 		<PackageReference Include="ConfigureAwait.Fody" Version="3.3.2" />
+		<PackageReference Include="CommunityToolkit.Maui" Version="7.0.1" />
 	</ItemGroup>
 
 	<ItemGroup>

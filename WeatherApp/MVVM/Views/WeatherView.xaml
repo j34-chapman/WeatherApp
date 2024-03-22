@@ -1,28 +1,41 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="WeatherApp.MVVM.Views.WeatherView"
              xmlns:converters="clr-namespace:WeatherApp.Converters"
              xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
+             BackgroundColor="{StaticResource BackgroundColor}"
              >
 
     <ContentPage.Resources>
         <converters:CodeToWeatherConverter x:Key="CodeToWeatherConverter"/>
         <converters:CodeToImageConverter x:Key="CodeToImageConverter"/>
+         
     </ContentPage.Resources>
 
     <!-- Grid with specified rows and margins -->
-    <Grid Margin="15" RowDefinitions=".08*,.2*,.7*,.1*,.3*">
+    <Grid Margin="15" RowDefinitions=".08*,.2*,.6*,.1*,.3*">
         <!-- Nested Grid with a Frame and a SearchBar -->
-        <Grid>
-            <Frame />
-            <SearchBar
-                x:Name="searchBar"
-                Placeholder="Search"
-                SearchCommand="{Binding SearchCommand}"
-                SearchCommandParameter="{Binding Source={x:Reference searchBar}, Path=Text}"
-                VerticalOptions="Center" />
-        </Grid>
+     <Grid>
+    <Frame />
+    <SearchBar
+        x:Name="searchBar"
+        Placeholder="Search"
+        SearchCommand="{Binding SearchCommand}"
+        SearchCommandParameter="{Binding Source={x:Reference searchBar}, Path=Text}"
+        VerticalOptions="Center">
+        <SearchBar.Behaviors>
+            <toolkit:TextValidationBehavior
+                Flags="ValidateOnValueChanged"
+                MinimumLength="1"
+                MaximumLength="50" />
+        </SearchBar.Behaviors>
+    </SearchBar>
+</Grid>
+
+
+
 
         <!-- Main StackLayout in the second row with location and date -->
         <Grid Grid.Row="1" ColumnDefinitions="*,*" IsVisible="{Binding IsVisible}">
@@ -73,13 +86,13 @@
             <!-- Defining the item template for each collection item -->
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Frame Style="{StaticResource Card}" VerticalOptions="Center">
+                    <Frame Style="{StaticResource Card}" VerticalOptions="Center" Opacity="0.7">
                         <VerticalStackLayout Spacing="5" VerticalOptions="Center">
                             <!-- SKLottieView within the item template -->
                             <skia:SKLottieView
                                 IsAnimationEnabled="True"
-                                HeightRequest="50"
-                                WidthRequest="50"
+                                HeightRequest="40"
+                                WidthRequest="40"
                                 Source="{Binding weather_code, Converter={StaticResource CodeToImageConverter}}"/>
                             <!-- Labels within the item template -->
                             <Label Text="{Binding time}" TextColor="{StaticResource }"/>

@@ -31,19 +31,20 @@
     <Color x:Key="DarkBlue">#8AD7F3</Color>
     <Color x:Key="CardColour">#d07ed7</Color>
 
-       <!-- Light Theme Colors -->
-    <Color x:Key="TextColor">#FFFFFF</Color>
-    <Color x:Key="BackgroundColor">#13BEFC</Color>
-    <Color x:Key="PrimaryColor">#2A87B3</Color>
-    <Color x:Key="SecondaryColor">#B079D7</Color>
-    <Color x:Key="AccentColor">#A63096</Color>
+    <!-- Light Theme Colors -->
+    <Color x:Key="TextColor">#0F0A0F</Color>
+    <Color x:Key="BackgroundColor">#F8F1F8</Color>
+    <Color x:Key="PrimaryColor">#FFA3FD</Color>
+    <Color x:Key="SecondaryColor">#E08ADF</Color>
+    <Color x:Key="AccentColor">#E359E1</Color>
 
     <!-- Dark Theme Colors -->
-    <Color x:Key="DarkTextColor">#FFFFFF</Color>
-    <Color x:Key="DarkBackgroundColor">#0099D1</Color>
-    <Color x:Key="DarkPrimaryColor">#91C6DE</Color>
-    <Color x:Key="DarkSecondaryColor">#5F2886</Color>
-    <Color x:Key="DarkAccentColor">#CF59BF</Color>
+    <Color x:Key="DarkTextColor">#F5F0F5</Color>
+    <Color x:Key="DarkBackgroundColor">#0E070E</Color>
+    <Color x:Key="DarkPrimaryColor">#5C005A</Color>
+    <Color x:Key="DarkSecondaryColor">#751F73</Color>
+    <Color x:Key="DarkAccentColor">#A61CA3</Color>
+
 
     
 

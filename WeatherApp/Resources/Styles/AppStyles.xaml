@@ -12,7 +12,7 @@
 
     <!-- Style for all Label elements -->
     <Style TargetType="Label">
-        <Setter Property="TextColor" Value="{StaticResource White}"/>
+        <Setter Property="TextColor" Value="{StaticResource TextColor}"/>
         <Setter Property="FontFamily" Value="RufinaRegular"/>
         <Setter Property="HorizontalOptions" Value="Center"/>
         <Setter Property="VerticalOptions" Value="Center"/>

@@ -43,14 +43,21 @@ namespace WeatherApp.MVVM.ViewModel
 
         }
 
-        public ICommand SearchCommand =>
-            new Command(async (searchText) =>
-            {
-                PlaceName = searchText.ToString();
-                var location = await GetCoordinatesAsync(searchText.ToString());
+        public ICommand SearchCommand => new Command(async (searchText) =>
+        {
+            var validationResult = new NoNumbersValidationBehavior().Validate(searchText);
 
-                await GetWeather(location, false); // Pass false to indicate not to update PlaceName
-            });
+            if (!validationResult.IsValid)
+            {
+                await Application.Current.MainPage.DisplayAlert("Validation Error", validationResult.Message, "OK");
+                return;
+            }
+
+            PlaceName = searchText.ToString();
+            var location = await GetCoordinatesAsync(searchText.ToString());
+            await GetWeather(location, false); // Pass false to indicate not to update PlaceName
+        });
+
 
 
 
