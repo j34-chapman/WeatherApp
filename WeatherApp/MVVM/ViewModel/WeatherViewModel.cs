@@ -5,27 +5,23 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using WeatherApp.MVVM.Model;
 
+
 namespace WeatherApp.MVVM.ViewModel
 {
     [AddINotifyPropertyChangedInterface]
-
-
     public class WeatherViewModel
     {
-
-
         public WeatherData WeatherData { get; set; }
         public Current current { get; set; }
         public string PlaceName { get; set; }
-        public DateTime Date { get; set; } =
-             DateTime.Now;
-
+        public DateTime Date { get; set; } = DateTime.Now;
         public bool IsVisible { get; set; }
         public bool IsLoading { get; set; }
 
@@ -34,65 +30,63 @@ namespace WeatherApp.MVVM.ViewModel
         public WeatherViewModel()
         {
             client = new HttpClient();
-
-            RequestLocationPermission();
-
-            // Move the logic to get current location and weather here
-            GetCurrentLocationAndWeather();
-
-
+            InitializeWeatherData();
         }
 
         public ICommand SearchCommand =>
-    new Command(async (searchText) =>
-    {
-        if (searchText is string text)
-        {
-            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+            new Command(async (searchText) =>
             {
-                // No internet connection, show error message
-                await DisplayErrorMessage("No internet connection available. Please check your network settings.");
-                return;
-            }
+                if (searchText is string text)
+                {
+                    if (Connectivity.NetworkAccess != NetworkAccess.Internet)
+                    {
+                        // No internet connection, show error message
+                        await DisplayErrorMessage("No internet connection available. Please check your network settings.");
+                        return;
+                    }
 
-            // Check if the input is empty
-            if (string.IsNullOrWhiteSpace(text))
-            {
-                // Input is empty, show error message
-                await DisplayErrorMessage("Place name cannot be empty.");
-                return;
-            }
+                    // Check if the input is empty
+                    if (string.IsNullOrWhiteSpace(text))
+                    {
+                        // Input is empty, show error message
+                        await DisplayErrorMessage("Place name cannot be empty.");
+                        return;
+                    }
 
-            // Check if the input contains a number
-            if (text.Any(char.IsDigit))
-            {
-                // Input contains a number, show error message
-                await DisplayErrorMessage("Place name cannot contain numbers.");
-                return;
-            }
+                    // Check if the input contains a number
+                    if (text.Any(char.IsDigit))
+                    {
+                        // Input contains a number, show error message
+                        await DisplayErrorMessage("Place name cannot contain numbers.");
+                        return;
+                    }
 
-            PlaceName = text;
-            var location = await GetCoordinatesAsync(text);
+                    PlaceName = text;
+                    var location = await GetCoordinatesAsync(text);
 
-            await GetWeather(location, false); // Pass false to indicate not to update PlaceName
-        }
-        else
-        {
-            // Input is null, show error message
-            await DisplayErrorMessage("Place name cannot be null.");
-        }
-    });
+                    await GetWeather(location, false); // Pass false to indicate not to update PlaceName
+                }
+                else
+                {
+                    // Input is null, show error message
+                    await DisplayErrorMessage("Place name cannot be null.");
+                }
+            });
 
         private async Task DisplayErrorMessage(string message)
         {
-            // Here you should display the error message to the user using your preferred UI mechanism
-            // For example, if you are using Xamarin.Forms, you might use DisplayAlert
             await App.Current.MainPage.DisplayAlert("Error", message, "OK");
+        }
+
+        private async Task InitializeWeatherData()
+        {
+            await RequestLocationPermission();
+            GetCurrentLocationAndWeather();
         }
 
 
 
-        private async void RequestLocationPermission()
+        private async Task RequestLocationPermission()
         {
             try
             {
@@ -128,17 +122,14 @@ namespace WeatherApp.MVVM.ViewModel
             {
                 // Handle exception, if any
                 Console.WriteLine($"Error requesting location permission: {ex.Message}");
+                await DisplayErrorMessage($"Error requesting location permission: {ex.Message}");
             }
         }
-
-
-
 
         public async Task GetCurrentLocationAndWeather()
         {
             try
             {
-
                 var location = await Geolocation.GetLocationAsync();
 
                 if (location != null)
@@ -148,9 +139,9 @@ namespace WeatherApp.MVVM.ViewModel
                 }
                 else
                 {
-                    // If last known location is not available, try to get the current location
-                    var request = new GeolocationRequest(GeolocationAccuracy.Best);
-                    location = await Geolocation.GetLocationAsync(request);
+                    // If last known location is not available, try again after a short delay
+                    await Task.Delay(4000); // Wait for 2 seconds
+                    location = await Geolocation.GetLocationAsync();
 
                     if (location != null)
                     {
@@ -159,17 +150,18 @@ namespace WeatherApp.MVVM.ViewModel
                     }
                     else
                     {
-                        // Handle the case where current location is not available
                         Console.WriteLine("Unable to determine the current location.");
+                        await DisplayErrorMessage("Unable to determine the current location.");
                     }
                 }
             }
             catch (Exception ex)
             {
-                // Handle exception, if any
                 Console.WriteLine($"Error getting current location: {ex.Message}");
+                await DisplayErrorMessage($"Error getting current location: {ex.Message}");
             }
         }
+
 
 
         private async Task GetWeather(Location location, bool updatePlaceName = true)
