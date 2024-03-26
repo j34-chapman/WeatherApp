@@ -5,11 +5,21 @@
              Title="Login"
              BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColor}, Dark={StaticResource DarkBackgroundColor}}">
 
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <!-- Style to set the placeholder color -->
+            <Style TargetType="Entry">
+                <Setter Property="PlaceholderColor" Value="{StaticResource PlaceholderTextColor}" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
     <ScrollView>
         <VerticalStackLayout Spacing="25"
                              Padding="30,0"
                              VerticalOptions="Center">
 
+            <!-- Profile Image -->
             <Frame HeightRequest="150"
                    WidthRequest="150"
                    CornerRadius="75"
@@ -23,60 +33,69 @@
                        WidthRequest="150" />
             </Frame>
 
+            <!-- Take Photo Button -->
             <Button x:Name="takeProfile"
+                    Style="{StaticResource LoginButtons}"
                     BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryColor}, Dark={StaticResource DarkPrimaryColor}}"
                     Clicked="TakePhoto"
                     HorizontalOptions="CenterAndExpand"
                     Text="Take Photo"
-                    TextColor="{AppThemeBinding Light={StaticResource TextColor}, Dark={StaticResource DarkTextColor}}">
+                    TextColor="{AppThemeBinding Light={StaticResource DarkTextColor}, Dark={StaticResource DarkTextColor}}"/>
 
-            </Button>
-
-            <Frame CornerRadius="5"
-                   Padding="3"
-                   BackgroundColor="{AppThemeBinding Light=#F0F0F0, Dark=#2C2C2E}"
-                   Margin="0,0,0,10">
-                <Entry Placeholder="Username"
+            <!-- Username Entry -->
+            <Frame CornerRadius="8"
+                   Padding="10"
+                   BackgroundColor="{AppThemeBinding Light=#F0F0F0, Dark=#2C2C2E}">
+                <Entry
+                       Style="{StaticResource EmailLogin}"
+                       Placeholder="Username"
                        Keyboard="Email"
-                       PlaceholderColor="{StaticResource PlaceholderTextColor}"
                        TextColor="{AppThemeBinding Light={StaticResource TextColor}, Dark={StaticResource TextColor}}"
                        BackgroundColor="Transparent" />
             </Frame>
 
-            <Frame CornerRadius="5"
-                   Padding="3"
-                   BackgroundColor="{AppThemeBinding Light=#F0F0F0, Dark=#2C2C2E}"
-                   Margin="0,0,0,10">
-                <Entry Placeholder="Password"
+            <!-- Password Entry -->
+            <Frame CornerRadius="8"
+                   Padding="10"
+                   BackgroundColor="{AppThemeBinding Light=#F0F0F0, Dark=#2C2C2E}">
+                <Entry
+                       Style="{StaticResource EmailLogin}"
+                       Placeholder="Password"
                        IsPassword="True"
-                       PlaceholderColor="{StaticResource PlaceholderTextColor}"
                        TextColor="{AppThemeBinding Light={StaticResource TextColor}, Dark={StaticResource TextColor}}"
                        BackgroundColor="Transparent" />
             </Frame>
 
-            <Frame CornerRadius="5"
-                   Padding="3"
-                   BackgroundColor="{AppThemeBinding Light=#F0F0F0, Dark=#2C2C2E}"
-                   Margin="0,0,0,20">
-                <Entry Placeholder="Confirm Password"
+            <!-- Confirm Password Entry -->
+            <Frame CornerRadius="8"
+                   Padding="10"
+                   BackgroundColor="{AppThemeBinding Light=#F0F0F0, Dark=#2C2C2E}">
+                <Entry
+                       Style="{StaticResource EmailLogin}"
+                       Placeholder="Confirm Password"
                        IsPassword="True"
-                       PlaceholderColor="{StaticResource PlaceholderTextColor}"
                        TextColor="{AppThemeBinding Light={StaticResource TextColor}, Dark={StaticResource TextColor}}"
                        BackgroundColor="Transparent" />
             </Frame>
 
+            <!-- Login Button -->
             <Button Text="Login"
-                    BackgroundColor="{AppThemeBinding Light={StaticResource SecondaryColor}, Dark={StaticResource DarkSecondaryColor}}"
+                    Style="{StaticResource LoginButtons}"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource AccentColor}, Dark={StaticResource DarkAccentColor}}"
                     TextColor="{AppThemeBinding Light={StaticResource DarkTextColor}, Dark={StaticResource DarkTextColor}}"
                     HorizontalOptions="CenterAndExpand"
-                    Clicked="Button_Clicked" />
+                    Clicked="Button_Clicked"/>
 
+            <!-- Forgot Password Label -->
             <Label Text="Forgot Password?"
+                   Style="{StaticResource EmailLogin}"
                    TextColor="{AppThemeBinding Light={StaticResource TextColor}, Dark={StaticResource DarkTextColor}}"
                    HorizontalOptions="Center"
                    Margin="0,10,0,0" />
 
+            <!-- Sign Up Label -->
             <Label Text="Don't have an account? Sign Up"
+                   Style="{StaticResource EmailLogin}"
                    TextColor="{AppThemeBinding Light={StaticResource TextColor}, Dark={StaticResource DarkTextColor}}"
                    HorizontalOptions="Center"
                    Margin="0,10,0,0" />
@@ -85,6 +104,9 @@
     </ScrollView>
 
 </ContentPage>
+
+
+
 
 
 

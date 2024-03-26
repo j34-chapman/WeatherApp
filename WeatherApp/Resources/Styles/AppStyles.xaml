@@ -60,6 +60,24 @@
          
     </Style>
 
+    <Style x:Key="EmailLogin" TargetType="Entry">
+         <Setter Property="FontFamily" Value="PoppinsLight"/>
+         <Setter Property="FontSize" Value="10"/>
+         
+    </Style>
+
+    <Style x:Key="ForgotPassword" TargetType="Entry">
+         <Setter Property="FontFamily" Value="PoppinsThin"/>
+         <Setter Property="FontSize" Value="Small"/>
+         
+    </Style>
+
+    <Style x:Key="LoginButtons" TargetType="Entry">
+         <Setter Property="FontFamily" Value="PoppinsBold"/>
+         <Setter Property="FontSize" Value="Small"/>
+         
+    </Style>
+
     <!-- Style for Label elements with a key "WeatherTitle" -->
     <Style x:Key="WeatherTitle" TargetType="Label">
         <Setter Property="FontFamily" Value="RufinaRegualr"/>

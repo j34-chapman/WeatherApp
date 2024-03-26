@@ -25,6 +25,7 @@ namespace WeatherApp
                     fonts.AddFont("Poppins-Light.ttf", "PoppinsLight");
                     fonts.AddFont("Poppins-Regualr.ttf", "PoppinsRegular");
                     fonts.AddFont("Poppins-SemiBold.ttf", "PoppinsSemiBold");
+                    fonts.AddFont("Poppins-Thin.ttf", "PoppinsThin");
 
                 });
 

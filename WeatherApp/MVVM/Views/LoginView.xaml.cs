@@ -1,5 +1,13 @@
 ﻿using WeatherApp.MVVM.ViewModel;namespace WeatherApp.MVVM.Views;public partial class LoginView : ContentPage{    public LoginView()    {        InitializeComponent();        BindingContext = new LoginViewModel();        NavigationPage.SetHasNavigationBar(this, false);    }
 
+    //Error message method
+    private async Task DisplayErrorMessage(string message)
+    {
+        await Application.Current.MainPage.DisplayAlert("Error", message, "OK");
+    }
+
+
+
     public async void TakePhoto(object sender, EventArgs e)
     {
         // Check if camera permissions are granted
@@ -49,4 +57,11 @@
         {
             await Shell.Current.DisplayAlert("Oops Not supported!", "Device isn't supported", "Ok");
         }
-    }    private void Button_Clicked(object sender, EventArgs e)    {         Navigation.PushAsync(new WeatherView());         //Clear the navigation stack, making it a one-way navigation         Application.Current.MainPage = new NavigationPage(new WeatherView());               // // Navigate to the WeatherView page       // var weatherView = new WeatherView();       //// NavigationPage.SetHasNavigationBar(weatherView, false); // Ensure navigation bar is hidden in the WeatherView       // Application.Current.MainPage = new NavigationPage(weatherView);    }}
+    }    private async void Button_Clicked(object sender, EventArgs e)    {        if (Connectivity.NetworkAccess != NetworkAccess.Internet)
+        {
+            // No internet connection, show error message
+            await DisplayErrorMessage("No internet connection available. Please check your network settings.");
+            return;
+        }
+
+         Navigation.PushAsync(new WeatherView());         //Clear the navigation stack, making it a one-way navigation         Application.Current.MainPage = new NavigationPage(new WeatherView());            }}
