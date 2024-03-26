@@ -118,6 +118,7 @@
 	  <None Remove="Resources\Fonts\Poppins-SemiBoldItalic.ttf" />
 	  <None Remove="Resources\Fonts\Poppins-Thin.ttf" />
 	  <None Remove="Resources\Fonts\Poppins-ThinItalic.ttf" />
+	  <None Remove="Resources\AppIcon\photo-camera-svgrepo-com.svg" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="MVVM\" />
@@ -159,6 +160,7 @@
 	  <BundleResource Include="Resources\Fonts\Poppins-SemiBoldItalic.ttf" />
 	  <BundleResource Include="Resources\Fonts\Poppins-Thin.ttf" />
 	  <BundleResource Include="Resources\Fonts\Poppins-ThinItalic.ttf" />
+	  <BundleResource Include="Resources\AppIcon\camera_icon.svg" />
 	</ItemGroup>
 	<ItemGroup Condition="'$(TargetFramework)' == 'net8.0-android'">
 	  <PackageReference Include="SkiaSharp.NativeAssets.Android" Version="2.88.7" />
