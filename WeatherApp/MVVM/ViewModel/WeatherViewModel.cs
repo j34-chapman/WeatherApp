@@ -96,8 +96,7 @@ namespace WeatherApp.MVVM.ViewModel
                 // Check if either of the permissions is granted
                 if (whenInUseStatus == PermissionStatus.Granted || alwaysStatus == PermissionStatus.Granted)
                 {
-                    // Location permission is already granted, proceed to get weather details
-                    GetCurrentLocationAndWeather();
+                    // Location permission is already granted, proceed
                 }
                 else
                 {
@@ -106,12 +105,7 @@ namespace WeatherApp.MVVM.ViewModel
                     alwaysStatus = await Permissions.RequestAsync<Permissions.LocationAlways>();
 
                     // Check if either of the permissions is granted
-                    if (whenInUseStatus == PermissionStatus.Granted || alwaysStatus == PermissionStatus.Granted)
-                    {
-                        // Location permission granted, proceed to get weather details
-                        GetCurrentLocationAndWeather();
-                    }
-                    else
+                    if (whenInUseStatus != PermissionStatus.Granted && alwaysStatus != PermissionStatus.Granted)
                     {
                         // Handle the case where location permission is denied for both types
                         await DisplayErrorMessage("Permission to access location is required to fetch weather automatically.");
@@ -120,11 +114,12 @@ namespace WeatherApp.MVVM.ViewModel
             }
             catch (Exception ex)
             {
-                // Handle exception, if any
                 Console.WriteLine($"Error requesting location permission: {ex.Message}");
-                await DisplayErrorMessage($"Error requesting location permission: {ex.Message}");
             }
         }
+
+
+
 
         public async Task GetCurrentLocationAndWeather()
         {
@@ -139,26 +134,38 @@ namespace WeatherApp.MVVM.ViewModel
                 }
                 else
                 {
-                    // If last known location is not available, try again after a short delay
-                    await Task.Delay(4000); // Wait for 2 seconds
-                    location = await Geolocation.GetLocationAsync();
+                    // If current location is not available, try to get the last known location
+                    location = await Geolocation.GetLastKnownLocationAsync();
 
                     if (location != null)
                     {
-                        // Use the obtained location to fetch weather details
+                        // Use the obtained last known location to fetch weather details
                         await GetWeather(location);
                     }
                     else
                     {
                         Console.WriteLine("Unable to determine the current location.");
-                        await DisplayErrorMessage("Unable to determine the current location.");
+                        await DisplayErrorMessage("Unable to determine the current location. Please check your location settings.");
                     }
                 }
             }
+            catch (FeatureNotSupportedException fnsEx)
+            {
+                // Handle not supported on device exception
+                Console.WriteLine(fnsEx.Message);
+                await DisplayErrorMessage("Location services are not supported on this device.");
+            }
+            catch (PermissionException pEx)
+            {
+                // Handle permission exception
+                Console.WriteLine(pEx.Message);
+                await DisplayErrorMessage("Location permission is not granted. Please enable location services and try again.");
+            }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error getting current location: {ex.Message}");
-                await DisplayErrorMessage($"Error getting current location: {ex.Message}");
+                // Handle other exceptions
+                Console.WriteLine($"Error getting location: {ex.Message}");
+                await DisplayErrorMessage($"Error getting location: {ex.Message}");
             }
         }
 

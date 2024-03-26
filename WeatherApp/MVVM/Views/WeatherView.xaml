@@ -98,15 +98,16 @@
                                 WidthRequest="40"
                                 Source="{Binding weather_code, Converter={StaticResource CodeToImageConverter}}"/>
                             <!-- Labels within the item template -->
-                            <Label Text="{Binding time}"
+                            <Label Style = "{StaticResource WeatherDate }"
+                                   Text="{Binding time}"
                                    TextColor="{AppThemeBinding Light={StaticResource TextColor}, Dark={StaticResource DarkTextColor}}"/>
 
                             <Label Style = "{StaticResource DailyMax }"
-                                   Text="{Binding temperature_2m_max }"
+                                   Text="{Binding temperature_2m_max ,StringFormat='{0} °' }"
                                    TextColor="{AppThemeBinding Light={StaticResource TextColor}, Dark={StaticResource DarkTextColor}}"/>
 
                             <Label Style = "{StaticResource DailyMin }"
-                                   Text="{Binding temperature_2m_min }"
+                                   Text="{Binding temperature_2m_min ,StringFormat='{0}°'}"
                                    TextColor="{AppThemeBinding Light={StaticResource TextColor}, Dark={StaticResource DarkTextColor}}"/>
 
                         </VerticalStackLayout>
