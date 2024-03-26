@@ -12,7 +12,7 @@ namespace WeatherApp
             builder
                 .UseMauiApp<App>()
                 .UseSkiaSharp()
-                .UseMauiCommunityToolkit()  // <-- Added this line
+                .UseMauiCommunityToolkit()  
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

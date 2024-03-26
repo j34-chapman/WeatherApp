@@ -48,6 +48,13 @@ namespace WeatherApp.MVVM.ViewModel
     {
         if (searchText is string text)
         {
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+            {
+                // No internet connection, show error message
+                await DisplayErrorMessage("No internet connection available. Please check your network settings.");
+                return;
+            }
+
             // Check if the input is empty
             if (string.IsNullOrWhiteSpace(text))
             {
