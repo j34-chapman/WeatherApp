@@ -92,33 +92,35 @@ namespace WeatherApp.MVVM.ViewModel
 
 
 
-
-
         private async void RequestLocationPermission()
         {
             try
             {
-                var status = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
+                var whenInUseStatus = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
+                var alwaysStatus = await Permissions.CheckStatusAsync<Permissions.LocationAlways>();
 
-                if (status == PermissionStatus.Granted)
+                // Check if either of the permissions is granted
+                if (whenInUseStatus == PermissionStatus.Granted || alwaysStatus == PermissionStatus.Granted)
                 {
                     // Location permission is already granted, proceed to get weather details
                     GetCurrentLocationAndWeather();
                 }
                 else
                 {
-                    // Request location permission
-                    status = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
+                    // Request location permissions
+                    whenInUseStatus = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
+                    alwaysStatus = await Permissions.RequestAsync<Permissions.LocationAlways>();
 
-                    if (status == PermissionStatus.Granted)
+                    // Check if either of the permissions is granted
+                    if (whenInUseStatus == PermissionStatus.Granted || alwaysStatus == PermissionStatus.Granted)
                     {
                         // Location permission granted, proceed to get weather details
                         GetCurrentLocationAndWeather();
                     }
                     else
                     {
-                        // Handle the case where location permission is denied
-                        Console.WriteLine("Location permission denied.");
+                        // Handle the case where location permission is denied for both types
+                        await DisplayErrorMessage("Permission to access location is required to fetch weather automatically.");
                     }
                 }
             }
@@ -131,11 +133,13 @@ namespace WeatherApp.MVVM.ViewModel
 
 
 
+
         public async Task GetCurrentLocationAndWeather()
         {
             try
             {
-                var location = await Geolocation.GetLastKnownLocationAsync();
+
+                var location = await Geolocation.GetLocationAsync();
 
                 if (location != null)
                 {
@@ -145,7 +149,7 @@ namespace WeatherApp.MVVM.ViewModel
                 else
                 {
                     // If last known location is not available, try to get the current location
-                    var request = new GeolocationRequest(GeolocationAccuracy.Medium);
+                    var request = new GeolocationRequest(GeolocationAccuracy.Best);
                     location = await Geolocation.GetLocationAsync(request);
 
                     if (location != null)
