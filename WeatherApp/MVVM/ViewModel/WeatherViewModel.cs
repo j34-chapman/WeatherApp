@@ -80,43 +80,59 @@ namespace WeatherApp.MVVM.ViewModel
 
         private async Task InitializeWeatherData()
         {
-            await RequestLocationPermission();
-            GetCurrentLocationAndWeather();
+            bool arePermissionsGranted = await CheckLocationPermissions();
+
+            if (arePermissionsGranted)
+            {
+                GetCurrentLocationAndWeather();
+            }
+            else
+            {
+                await DisplayErrorMessage("Permission to access location is required to fetch weather automatically.");
+            }
         }
 
-
-
-        private async Task RequestLocationPermission()
+        private async Task<bool> CheckLocationPermissions()
         {
-            try
-            {
-                var whenInUseStatus = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
-                var alwaysStatus = await Permissions.CheckStatusAsync<Permissions.LocationAlways>();
+            const int maxRetries = 3;
+            const int delayMilliseconds = 500; // 500 milliseconds delay
 
-                // Check if either of the permissions is granted
+            var whenInUseStatus = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
+            var alwaysStatus = await Permissions.CheckStatusAsync<Permissions.LocationAlways>();
+
+            if (whenInUseStatus == PermissionStatus.Granted || alwaysStatus == PermissionStatus.Granted)
+            {
+                return true; // Permissions are granted
+            }
+
+            for (int i = 0; i < maxRetries; i++)
+            {
+                // Request location permissions
+                whenInUseStatus = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
+                alwaysStatus = await Permissions.RequestAsync<Permissions.LocationAlways>();
+
+                // Wait for a short delay before checking permissions again
+                await Task.Delay(delayMilliseconds);
+
+                // Check if either of the permissions is granted after requesting
+                whenInUseStatus = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
+                alwaysStatus = await Permissions.CheckStatusAsync<Permissions.LocationAlways>();
+
                 if (whenInUseStatus == PermissionStatus.Granted || alwaysStatus == PermissionStatus.Granted)
                 {
-                    // Location permission is already granted, proceed
+                    return true; // Permissions are granted
                 }
-                else
-                {
-                    // Request location permissions
-                    whenInUseStatus = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
-                    alwaysStatus = await Permissions.RequestAsync<Permissions.LocationAlways>();
 
-                    // Check if either of the permissions is granted
-                    if (whenInUseStatus != PermissionStatus.Granted && alwaysStatus != PermissionStatus.Granted)
-                    {
-                        // Handle the case where location permission is denied for both types
-                        await DisplayErrorMessage("Permission to access location is required to fetch weather automatically.");
-                    }
-                }
+                // Wait for a short delay before retrying
+                await Task.Delay(delayMilliseconds);
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error requesting location permission: {ex.Message}");
-            }
+
+            // Permissions are not granted after max retries
+            return false;
         }
+
+
+
 
 
 
