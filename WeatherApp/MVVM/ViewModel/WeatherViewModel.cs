@@ -25,14 +25,16 @@ namespace WeatherApp.MVVM.ViewModel
         public bool IsVisible { get; set; }
         public bool IsLoading { get; set; }
 
-        private HttpClient client;
+        private HttpClient client; // HttpClient for API requests
 
+        // Constructor to initialize HttpClient and weather data
         public WeatherViewModel()
         {
             client = new HttpClient();
             InitializeWeatherData();
         }
 
+        // Command for searching weather based on user input
         public ICommand SearchCommand =>
             new Command(async (searchText) =>
             {
@@ -73,6 +75,7 @@ namespace WeatherApp.MVVM.ViewModel
                 }
             });
 
+        // Method to display error message
         private async Task DisplayErrorMessage(string message)
         {
             await App.Current.MainPage.DisplayAlert("Error", message, "OK");
@@ -92,38 +95,68 @@ namespace WeatherApp.MVVM.ViewModel
             }
         }
 
+        //// Method to check location permissions 
+        //private async Task<bool> CheckLocationPermissions()
+        //{
+        //    const int maxRetries = 3;
+        //    const int delayMilliseconds = 500; // 500 milliseconds delay
+
+        //    var whenInUseStatus = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
+        //    var alwaysStatus = await Permissions.CheckStatusAsync<Permissions.LocationAlways>();
+
+        //    if (whenInUseStatus == PermissionStatus.Granted || alwaysStatus == PermissionStatus.Granted)
+        //    {
+        //        return true; // Permissions are granted
+        //    }
+
+        //    for (int i = 0; i < maxRetries; i++)
+        //    {
+        //        // Request location permissions
+        //        whenInUseStatus = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
+        //        alwaysStatus = await Permissions.RequestAsync<Permissions.LocationAlways>();
+
+        //        // Wait for a short delay before checking permissions again
+        //        await Task.Delay(delayMilliseconds);
+
+        //        // Check if either of the permissions is granted after requesting
+        //        whenInUseStatus = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
+        //        alwaysStatus = await Permissions.CheckStatusAsync<Permissions.LocationAlways>();
+
+        //        if (whenInUseStatus == PermissionStatus.Granted || alwaysStatus == PermissionStatus.Granted)
+        //        {
+        //            return true; // Permissions are granted
+        //        }
+
+        //        // Wait for a short delay before retrying
+        //        await Task.Delay(delayMilliseconds);
+        //    }
+
+        //    // Permissions are not granted after max retries
+        //    return false;
+        //}
+
         private async Task<bool> CheckLocationPermissions()
         {
-            const int maxRetries = 3;
+            const int maxRetries = 100;
             const int delayMilliseconds = 500; // 500 milliseconds delay
-
-            var whenInUseStatus = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
-            var alwaysStatus = await Permissions.CheckStatusAsync<Permissions.LocationAlways>();
-
-            if (whenInUseStatus == PermissionStatus.Granted || alwaysStatus == PermissionStatus.Granted)
-            {
-                return true; // Permissions are granted
-            }
 
             for (int i = 0; i < maxRetries; i++)
             {
-                // Request location permissions
-                whenInUseStatus = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
-                alwaysStatus = await Permissions.RequestAsync<Permissions.LocationAlways>();
-
-                // Wait for a short delay before checking permissions again
-                await Task.Delay(delayMilliseconds);
-
-                // Check if either of the permissions is granted after requesting
-                whenInUseStatus = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
-                alwaysStatus = await Permissions.CheckStatusAsync<Permissions.LocationAlways>();
+                var whenInUseStatus = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
+                var alwaysStatus = await Permissions.CheckStatusAsync<Permissions.LocationAlways>();
 
                 if (whenInUseStatus == PermissionStatus.Granted || alwaysStatus == PermissionStatus.Granted)
                 {
                     return true; // Permissions are granted
                 }
 
-                // Wait for a short delay before retrying
+                // Request location permissions
+                var whenInUseRequest = Permissions.RequestAsync<Permissions.LocationWhenInUse>();
+                var alwaysRequest = Permissions.RequestAsync<Permissions.LocationAlways>();
+
+                await Task.WhenAny(whenInUseRequest, alwaysRequest);
+
+                // Wait for a short delay before checking permissions again
                 await Task.Delay(delayMilliseconds);
             }
 
@@ -137,6 +170,7 @@ namespace WeatherApp.MVVM.ViewModel
 
 
 
+        //Method to get current location and weather
         public async Task GetCurrentLocationAndWeather()
         {
             try
@@ -189,23 +223,25 @@ namespace WeatherApp.MVVM.ViewModel
 
         private async Task GetWeather(Location location, bool updatePlaceName = true)
         {
-            var url =
-                 $"https://api.open-meteo.com/v1/forecast?latitude={location.Latitude}&longitude={location.Longitude}&current=temperature_2m,weather_code,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=Europe%2FLondon";
+            // Construct the API URL using latitude and longitude from the location parameter
+            var url = $"https://api.open-meteo.com/v1/forecast?latitude={location.Latitude}&longitude={location.Longitude}&current=temperature_2m,weather_code,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=Europe%2FLondon";
 
-            IsLoading = true;
+            IsLoading = true; 
 
+            
+            var response = await client.GetAsync(url);
 
-
-            var response =
-              await client.GetAsync(url);
-
+            
             if (response.IsSuccessStatusCode)
             {
+                // Read the response content as a stream
                 using (var responseStream = await response.Content.ReadAsStreamAsync())
                 {
-                    var data = await JsonSerializer
-                         .DeserializeAsync<WeatherData>(responseStream);
+                    // Deserialize the JSON response into a WeatherData object
+                    var data = await JsonSerializer.DeserializeAsync<WeatherData>(responseStream);
                     WeatherData = data;
+
+                    // Iterate through each day's weather forecast to populate the nextdays list
                     for (int i = 0; i < WeatherData.daily.time.Length; i++)
                     {
                         var nextdays = new NextDays
@@ -214,21 +250,24 @@ namespace WeatherApp.MVVM.ViewModel
                             weather_code = WeatherData.daily.weather_code[i],
                             temperature_2m_max = WeatherData.daily.temperature_2m_max[i],
                             temperature_2m_min = WeatherData.daily.temperature_2m_min[i],
-
                         };
-                        WeatherData.nextdays.Add(nextdays);
+                        WeatherData.nextdays.Add(nextdays); // Add the forecast to the nextdays list
                     }
-                    IsVisible = true;
 
+                    IsVisible = true; // Set IsVisible to true to indicate that weather data is available
+
+                    // Update the place name if specified
                     if (updatePlaceName)
                     {
                         string locationName = await GetLocationNameAsync(location);
-                        PlaceName = locationName;
+                        PlaceName = locationName; // Set the PlaceName property to the retrieved location name
                     }
                 }
             }
-            IsLoading = false;
+
+            IsLoading = false; // Set IsLoading to false after weather data retrieval is complete
         }
+
 
 
         private async Task<string> GetLocationNameAsync(Location location)

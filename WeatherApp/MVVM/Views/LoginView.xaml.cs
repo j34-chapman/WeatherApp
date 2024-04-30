@@ -57,11 +57,34 @@
         {
             await Shell.Current.DisplayAlert("Oops Not supported!", "Device isn't supported", "Ok");
         }
-    }    private async void Button_Clicked(object sender, EventArgs e)    {        if (Connectivity.NetworkAccess != NetworkAccess.Internet)
+    }
+
+
+    private async void Button_Clicked(object sender, EventArgs e)
+    {
+        if (Connectivity.NetworkAccess != NetworkAccess.Internet)
         {
             // No internet connection, show error message
             await DisplayErrorMessage("No internet connection available. Please check your network settings.");
             return;
         }
 
-         Navigation.PushAsync(new WeatherView());         //Clear the navigation stack, making it a one-way navigation         Application.Current.MainPage = new NavigationPage(new WeatherView());            }}
+        // Retrieve the text entered in the password and confirm password fields
+        string password = passwordEntry.Text;
+        string confirmPassword = confirmPasswordEntry.Text;
+
+        // Check if the passwords match
+        if (password != confirmPassword)
+        {
+            // Passwords don't match, display error message
+            await DisplayErrorMessage("Passwords don't match. Please ensure your passwords match.");
+            return;
+        }
+
+        // Proceed with your desired action (e.g., navigation)
+        Navigation.PushAsync(new WeatherView());
+
+        // Clear the navigation stack, making it a one-way navigation
+        Application.Current.MainPage = new NavigationPage(new WeatherView());
+    }
+}

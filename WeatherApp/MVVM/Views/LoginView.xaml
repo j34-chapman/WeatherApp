@@ -58,7 +58,7 @@
             <Frame CornerRadius="8"
                    Padding="10"
                    BackgroundColor="{AppThemeBinding Light=#F0F0F0, Dark=#2C2C2E}">
-                <Entry
+                <Entry x:Name="passwordEntry"
                        Style="{StaticResource EmailLogin}"
                        Placeholder="Password"
                        IsPassword="True"
@@ -70,13 +70,14 @@
             <Frame CornerRadius="8"
                    Padding="10"
                    BackgroundColor="{AppThemeBinding Light=#F0F0F0, Dark=#2C2C2E}">
-                <Entry
+                <Entry x:Name="confirmPasswordEntry"
                        Style="{StaticResource EmailLogin}"
                        Placeholder="Confirm Password"
                        IsPassword="True"
                        TextColor="{AppThemeBinding Light={StaticResource TextColor}, Dark={StaticResource TextColor}}"
                        BackgroundColor="Transparent" />
             </Frame>
+
 
             <!-- Login Button -->
             <Button Text="Sign Up"
