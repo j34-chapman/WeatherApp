@@ -137,7 +137,7 @@ namespace WeatherApp.MVVM.ViewModel
 
         private async Task<bool> CheckLocationPermissions()
         {
-            const int maxRetries = 100;
+            const int maxRetries = 50;
             const int delayMilliseconds = 500; // 500 milliseconds delay
 
             for (int i = 0; i < maxRetries; i++)

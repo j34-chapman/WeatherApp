@@ -50,7 +50,7 @@
                 <Label Style="{StaticResource TemperatureTitle}"
                        Text="{Binding WeatherData.current.temperature_2m, StringFormat='{0}°c'}"
                        TextColor="{AppThemeBinding Light=#0F0A0F, Dark=#F5F0F5}"
-                       SemanticProperties.Description="{StaticResource TemperatureTitle}"/>
+                       />
             </VerticalStackLayout>
         </Grid>
 
