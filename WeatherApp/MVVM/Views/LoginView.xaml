@@ -49,8 +49,9 @@
                 <Entry
                        Style="{StaticResource EmailLogin}"
                        Placeholder="Username"
+                       PlaceholderColor="{AppThemeBinding Light=#606060, Dark=#A0A0A0}"
                        Keyboard="Email"
-                       TextColor="{AppThemeBinding Light={StaticResource TextColor}, Dark={StaticResource TextColor}}"
+                       TextColor="{AppThemeBinding Light=#000000, Dark=#FFFFFF}"
                        BackgroundColor="Transparent" />
             </Frame>
 
@@ -61,8 +62,9 @@
                 <Entry x:Name="passwordEntry"
                        Style="{StaticResource EmailLogin}"
                        Placeholder="Password"
+                       PlaceholderColor="{AppThemeBinding Light=#606060, Dark=#A0A0A0}"
                        IsPassword="True"
-                       TextColor="{AppThemeBinding Light={StaticResource TextColor}, Dark={StaticResource TextColor}}"
+                       TextColor="{AppThemeBinding Light=#000000, Dark=#FFFFFF}"
                        BackgroundColor="Transparent" />
             </Frame>
 
@@ -73,8 +75,9 @@
                 <Entry x:Name="confirmPasswordEntry"
                        Style="{StaticResource EmailLogin}"
                        Placeholder="Confirm Password"
+                       PlaceholderColor="{AppThemeBinding Light=#606060, Dark=#A0A0A0}"
                        IsPassword="True"
-                       TextColor="{AppThemeBinding Light={StaticResource TextColor}, Dark={StaticResource TextColor}}"
+                       TextColor="{AppThemeBinding Light=#000000, Dark=#FFFFFF}"
                        BackgroundColor="Transparent" />
             </Frame>
 
